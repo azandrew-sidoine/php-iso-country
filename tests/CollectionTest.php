@@ -56,7 +56,8 @@ class CollectionTest extends TestCase
      */
     public function test_collection_all($collection)
     {
-        $this->assertInternalType('array', $collection->all());
+        $is_array = is_array($collection->all());
+        $this->assertTrue($is_array);
     }
 
     /**
