@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drewlabs\ISO\Country;
 
-use JsonSerializable;
-
-class ITUCountry implements CountryInterface, JsonSerializable
+class ITUCountry implements CountryInterface, \JsonSerializable
 {
     /**
      * @var string
@@ -21,27 +30,30 @@ class ITUCountry implements CountryInterface, JsonSerializable
      */
     private $code;
 
-
     /**
-     * creates class instance
-     * 
-     * @param string $alpha2 
-     * @param string $code 
-     * @param mixed $name 
-     * @return void 
+     * creates class instance.
+     *
+     * @param mixed $name
+     *
+     * @return void
      */
     public function __construct(string $alpha2, string $code, $name = null)
     {
         $this->alpha2 = $alpha2;
         $this->code = $code;
         $this->name = $name;
-        
+
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getAlpha2();
     }
 
     /**
-     * returns the `alpha 2` iso code for the country
-     * 
-     * @return string 
+     * returns the `alpha 2` iso code for the country.
+     *
+     * @return string
      */
     public function getAlpha2()
     {
@@ -49,19 +61,19 @@ class ITUCountry implements CountryInterface, JsonSerializable
     }
 
     /**
-     * returns the `name` iso code for the country
-     * 
-     * @return string 
+     * returns the `name` iso code for the country.
+     *
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
     /**
-     * returns the `ITU-T code` for the current instance
-     * 
-     * @return string 
+     * returns the `ITU-T code` for the current instance.
+     *
+     * @return string
      */
     public function getCode()
     {
@@ -69,16 +81,16 @@ class ITUCountry implements CountryInterface, JsonSerializable
     }
 
     /**
-     * returns the array representation of the instance
-     * 
-     * @return array 
+     * returns the array representation of the instance.
+     *
+     * @return array
      */
     public function toArray()
     {
         return [
             'name' => $this->getName(),
             'alpha2' => $this->getAlpha2(),
-            'code' => $this->getCode()
+            'code' => $this->getCode(),
         ];
     }
 
@@ -87,10 +99,4 @@ class ITUCountry implements CountryInterface, JsonSerializable
     {
         return $this->toArray();
     }
-
-    public function __toString()
-    {
-        return strval($this->getAlpha2());
-    }
-
 }

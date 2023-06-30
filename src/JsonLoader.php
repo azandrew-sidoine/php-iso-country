@@ -1,8 +1,17 @@
 <?php
 
-namespace Drewlabs\ISO\Country;
+declare(strict_types=1);
 
-use RuntimeException;
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Drewlabs\ISO\Country;
 
 class JsonLoader
 {
@@ -12,28 +21,26 @@ class JsonLoader
     private $factory;
 
     /**
-     * Creates class instance
-     * 
-     * @param CountryFactoryInterface $factory 
-     * @return void 
+     * Creates class instance.
+     *
+     * @return void
      */
     public function __construct(CountryFactoryInterface $factory)
     {
         $this->factory = $factory;
     }
 
-
     /**
-     * Load countries data from a specific path
-     * 
-     * @param string $path 
-     * @return CountryInterface[] 
-     * @throws RuntimeException 
+     * Load countries data from a specific path.
+     *
+     * @throws \RuntimeException
+     *
+     * @return CountryInterface[]
      */
     public function load(string $path)
     {
         if (!is_file($path)) {
-            throw new RuntimeException('json file not found at location');
+            throw new \RuntimeException('json file not found at location');
         }
 
         if (false === ($content = file_get_contents($path))) {
@@ -42,10 +49,10 @@ class JsonLoader
 
         $values = [];
 
-        if (false === boolval($array = @json_decode($content, true))) {
+        if (false === (bool) ($array = @json_decode($content, true))) {
             return $values;
         }
-    
+
         foreach ($array as $value) {
             $values[] = $this->factory->createCountry($value);
         }
